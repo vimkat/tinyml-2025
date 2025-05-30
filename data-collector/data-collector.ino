@@ -28,7 +28,7 @@ void setup() {
 
   if (!SD.begin(10)) {
     Serial.println("Failed to initialize SD!");
-    blink();
+    blink(LED_RED);
   }
   //record = SD.open("REC.txt", FILE_WRITE);
   //if (!record) {
@@ -37,6 +37,7 @@ void setup() {
   //}
 
 	recFileName = getRecordFile();
+  record = SD.open(recFileName, FILE_WRITE);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -140,7 +141,7 @@ void loop() {
 
   // check if the SD card is available to write data without blocking
   // and if the dataBuffered data is enough for the full chunk size
-  record = SD.open(recFileName, FILE_WRITE);
+  // record = SD.open(recFileName, FILE_WRITE);
   unsigned int chunkSize = record.availableForWrite();
   if (chunkSize && buffer.length() >= chunkSize) {
     // write to file and blink LED
@@ -150,14 +151,14 @@ void loop() {
     // remove written data from dataBuffer
     buffer.remove(0, chunkSize);
   }
-  record.close();
+  // record.close();
 }
 
-void blink() {
+void blink(PinName pin) {
   while(1) {
-    digitalWrite(LED_RED, HIGH);
+    digitalWrite(pin, HIGH);
     delay(1000);
-    digitalWrite(LED_RED, LOW);
+    digitalWrite(pin, LOW);
     delay(1000);
   }
 }
