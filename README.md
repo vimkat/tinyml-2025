@@ -158,23 +158,23 @@ The same has been done for the acceleration data but since it didn't give any re
 
 The architecture of the classifier consists of 59 input nodes from the extracted features and three dense layers containing 30, 20 and 10 neurons.
 Three output classes indicate the probabilities of the most likely flight mode.
-In total, the accuracy during training validation is 92.5% with the following confusion matrix:
+In total, the accuracy during training validation is 93.8% with the following confusion matrix:
 
 |              | **Circling** | **Cruising** | **Grounded** |
 | :----------- | :----------: | :----------: | :----------: |
-| **Circling** | 78.1% | 21.2% | 0.7% |
-| **Cruising** | 6.7% | 89.7% | 3.6% |
-| **Grounded** | 0% | 1.6% | 98.4% |
-| **F1-Score** | 0.83 | 0.86 | 0.98 |
+| **Circling** | 83.2% | 16.3% | 0.5% |
+| **Cruising** | 9.5% | 89.0% | 1.5% |
+| **Grounded** | 0% | 0.6% | 99.4% |
+| **F1-Score** | 0.85 | 0.88 | 0.99 |
 
-When testing using a separate testing set (split was an average 70% / 30% on the total data), the accuracy was 90.87% with the following confusion matrix:
+When testing using a separate testing set (split was an average 70% / 30% on the total data), the accuracy was 91.44% with the following confusion matrix:
 
 |              | **Circling** | **Cruising** | **Grounded** | **Uncertain** |
 | :----------- | :----------: | :----------: | :----------: | :-----------: |
-| **Circling** | 77.8% | 17.2% | 0.2% | 4.9% |
-| **Cruising** | 7.5% | 79.7% | 4.4% | 8.4% |
-| **Grounded** | 0.5% | 2.2% | 96.2% | 1.2 % |
-| **F1-Score** | 0.81 | 0.80 | 0.97 | -- |
+| **Circling** | 80.6% | 13.8% | 0.5% | 5.2% |
+| **Cruising** | 11.1% | 74.8% | 3.8% | 10.3% |
+| **Grounded** | 0.1% | 1.6% | 97.9% | 1.5 % |
+| **F1-Score** | 0.81 | 0.79 | 0.98 | -- |
 
 These values are based on the unoptimized (float32-based) model.
 Using the quantized (int8) model, the accuracies didn't show any real change, which is great for memory and speed efficiency.
