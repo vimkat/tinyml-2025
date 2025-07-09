@@ -38,16 +38,16 @@ Having information about the current flight mode can have a number of possible a
 Pilots are mostly occupied with flying the plane and keeping an eye on the on-board instruments.
 Not all instruments are equally important during every phase of the flight.
 Some of those instruments are analog e.g. the altimeter (current height), variometer (rate of climb and descend indicator, RCDI) and air speed indicator (ASI) whilst others are digital e.g. digital variometer (more on that later), flight computer (for navigation and info on the reachability of the next airfield) and radio (for communication with airfields and other pilots).
-This leaves instrument designers and pilots with a dilemma: Keep clean and easy to read instruments with less information density but risk that pilots have to control these and switch during multiple screens during flight or show as much information at once as possible but risk that essential information is harder to spot.
+This leaves instrument designers and pilots with a dilemma: Keep clean and easy to read instruments with less information density but risk that pilots have to control these and switch between multiple screens during flight or show as much information at once as possible but risk that essential information is harder to spot.
 Digital instruments come with the flexibility of adapting to one pilot's individual needs during flight but require their input from time to time, distracting them from flying and causing potential security risks.
-This can also lead to pilots "being blind" for a moment, either by having to look at instruments' menus or because their instruments are not showing the information they need in this moment.
+This can also lead to pilots "being blind" for a moment, either by having to look at instruments' menus or because their instruments are not showing the information they need in that moment.
 
 This picture shows a set of instruments that are inside a glider's cockpit.
 
 ![Instruments in a glider's cockpit](assets/plane-instruments.jpg)
 
 Our approach to this problem is to develop a (tiny) machine learning powered microcontroller that can detect the current flight mode of the plane and control instruments based on that information.
-Whilst the actual integration with instruments are outside of the scope of this project (mostly due to not being able to modify expensive flight instruments), one could use our model/microcontroller to interface with their instruments at their own discretion.
+Whilst the actual integration with instruments are outside the scope of this project (mostly due to not being able to modify expensive flight instruments), one could use our model/microcontroller to interface with their instruments at their own discretion.
 We will show the detected flight mode using the onboard RGB LED which can easily be adapted to control a 3rd party peripheral or a physical switch on an instrument if it doesn't provide a better interface.
 Moreover, we publish the detected flight mode over Bluetooth LE so other applications (e.g. a smartphone flight navigation app) can consume them.
 Due to severe size and power restrictions, a microcontroller-based ML model is the perfect solution since it requires little space and can easily be powered using the onboard battery.
@@ -80,7 +80,7 @@ The following software and platforms have been used:
 
 ## Collecting Data
 
-To train the model, IMU and pressure data needs to be collected during flight.
+To train the model, IMU data and pressure data need to be collected during flight.
 Whilst Edge Impulse supports data collection out of the box, it can't be used in this context since an active connection to a computer (and the internet) is required.
 This can't be realized in a highly space-constrained environment.
 To collect data, we created an Arduino [data collection sketch] that reads IMU and pressure data and writes it to the connected SD card for later usage.
@@ -182,7 +182,7 @@ Using the quantized (int8) model, the accuracies didn't show any real change, wh
 Whilst the overall accuracy is fairly good, the biggest issues were differentiating between *circling* and *cruising* --- the main flight modes we want to distinguish.
 After testing the classifier during a real flight the reason became obvious.
 Whilst circling the pilot stops and flies straight for a brief period of time in order to re-center the plane in the thermal updraft.
-During these short parts of flying straight, the classifier detects them as *cruising*.
+During these short parts of flying straight, the classifier detects the plane as *cruising*.
 These adjustments usually last only for a few seconds.
 
 Therefore, a plausibility check has been implemented after classification on the microcontroller since in reality, flight modes can't change back and forth too quickly (think of this as a low-pass filter on the classification results).
@@ -210,7 +210,7 @@ The final board with all components looks like this:
 ![Detailed view on the microcontroller and its components](assets/plane-top.jpg)
 
 One live test has been conducted to verify the findings from the test data.
-Very unfortunately, we weren't able to take a video during flight since the camera would block part of the pilot's view which has been denied by my flight instructor due to obvious safety reasons.
+Very unfortunately, we weren't able to take a video during flight since the camera would block part of the pilot's view which has been denied by the flight instructor due to obvious safety reasons.
 Holding a camera with one hand whilst flying with the other has also been regarded a bad idea.
 
 
