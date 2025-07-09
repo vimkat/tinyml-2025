@@ -44,7 +44,7 @@ This can also lead to pilots "being blind" for a moment, either by having to loo
 
 This picture shows a set of instruments that are inside a glider's cockpit.
 
-![assets/plane-instruments.jpg]
+![Instruments in a glider's cockpit](assets/plane-instruments.jpg)
 
 Our approach to this problem is to develop a (tiny) machine learning powered microcontroller that can detect the current flight mode of the plane and control instruments based on that information.
 Whilst the actual integration with instruments are outside of the scope of this project (mostly due to not being able to modify expensive flight instruments), one could use our model/microcontroller to interface with their instruments at their own discretion.
@@ -106,12 +106,12 @@ To deploy the data collector inside the plane, it has been mounted with Velcro i
 The following picture shows the collection unit behind the pilot's headrest.
 We were able to log three separate flights like this.
 
-![assets/data-collection-full.jpg]
+![Microcontroller mounted in the back of the plane for data collection](assets/data-collection-full.jpg)
 
 One problem we encountered was that the SD card couldn't initialize when booting up the microcontroller during our tests.
 When measuring the power draw of the SD card and comparing it against the SPI clock cycle of the Arduino using an oscilloscope, this happened:
 
-![assets/osc-bad-power.png]
+![Oscilloscope showing insufficient power output and current drop](assets/osc-bad-power.png)
 
 The supplied power over USB from the connected laptop couldn't sustain the initial high current draw of the SD card directly after bootup and the current dropped.
 The result is that initialization fails and no data can be collected.
@@ -121,7 +121,7 @@ To resolve the issue, we used a dedicated variable power converter that can hand
 Connecting a 9V battery (and in theory the plane's onboard battery), there were no issues in initializing the SD card anymore.
 The oscilloscope shows a clean voltage supply when booting up.
 
-![assets/osc-good-power.png]
+![Oscilloscope showing clean power output without current drop](assets/osc-good-power.png)
 
 (Thanks to the group behind us that was kind enough to lend us their power converter during the course of this project!)
 
@@ -136,7 +136,7 @@ A third mode *grounded* has been introduced that combines both *pre take-off* an
 Looking at the data, one can see (apart from noisy sensor readings) that the most prominent difference during *circling* and *cruising* can be found in the gyroscope readings.
 The following graph shows the barometric pressure (QFE) and rotation around the Z-axis (as well as the manually labelled flight modes for visualization.
 
-![assets/flight-modes-classified.png]
+![IMU and barometric pressure data with flight mode labels](assets/flight-modes-classified.png)
 
 The data has been labelled manually in reference to a separately collected GPS trace from the onboard flight tracker.
 Whenever the plane was taking tight turns over a period of time, the plane was considered *circling*, otherwise the plane was *cruising*.
@@ -203,11 +203,11 @@ The 5-way-classifier can be found here: https://studio.edgeimpulse.com/studio/73
 For testing, the microcontroller has been deployed inside the plane above the instruments and mounted using a Velcro strap underneath.
 The following picture shows the board inside the plane:
 
-![assets/plane-cockpit.jpg]
+![Microcontroller mounted inside the glider's cockpit](assets/plane-cockpit.jpg)
 
 The final board with all components looks like this:
 
-![assets/plane-top.jpg]
+![Detailed view on the microcontroller and its components](assets/plane-top.jpg)
 
 One live test has been conducted to verify the findings from the test data.
 Very unfortunately, we weren't able to take a video during flight since the camera would block part of the pilot's view which has been denied by my flight instructor due to obvious safety reasons.
