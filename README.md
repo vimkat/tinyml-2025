@@ -212,12 +212,14 @@ The final board with all components looks like this:
 One live test has been conducted to verify the findings from the test data.
 Very unfortunately, we weren't able to take a video during flight since the camera would block part of the pilot's view which has been denied by the flight instructor due to obvious safety reasons.
 Holding a camera with one hand whilst flying with the other has also been regarded a bad idea.
+Instead, the pilot looked at the onboard LED during flight which changed color based on the currently detected flight mode (red for *grounded*, green for *cruising*, blue for *circling*).
 
 
 ## Conclusion
 
 Overall, the project has been successful!
 We could show that IMU and barometric pressure data can be used to distinguish between the flight modes *circling* and *cruising* without much difficulty.
+R1 and R2 can therefore be both answered with yes as long as the flight modes are different enough and plausibility checks are leveraged to smooth out any misclassification.
 
 One future application of this project could be to interface with an existing instrument in order to leverage the detected flight mode and adjust the instrument as needed during that phase of flight.
 This could e.g. be done with the digital variometer that supports two modes
